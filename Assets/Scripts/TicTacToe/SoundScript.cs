@@ -5,11 +5,17 @@ using UnityEngine;
 
 public class SoundScript : MonoBehaviour
 {
+    public static SoundScript instance;
 
-    public  AudioSource audSource;
+    public AudioSource audSource;
     public AudioClip playClip;
     public AudioClip winClip;
     public AudioClip loseClip;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Start()
     {
@@ -28,8 +34,6 @@ public class SoundScript : MonoBehaviour
             case "Lose":
                 audSource.PlayOneShot(loseClip, 0.5f);
                 break;
-
         }
     }
-
 }
