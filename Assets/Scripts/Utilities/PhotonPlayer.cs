@@ -25,9 +25,9 @@ public class PhotonPlayer : NetworkBehaviour
         if (!IsOwner) return;
 
         BoardControllerMP.instance.debugText.text = "Is Host: " + IsHost + "\nIs Host Turn: " + BoardControllerMP.instance.isHostTurn + "\nGame Started: " + gameStarted;
-        BoardControllerMP.instance.debugText2.text = "Linha: " + BoardControllerMP.instance.lastLineClicked + "\nColuna: " + BoardControllerMP.instance.lastColClicked;
+        BoardControllerMP.instance.debugText2.text = "Linha: " + BoardControllerMP.instance.lastLineClicked + "\nColuna: " + BoardControllerMP.instance.lastColClicked + "\nWinner: " + BoardControllerMP.instance.winner;
 
-        if (BoardControllerMP.instance.playHappening && BoardControllerMP.instance.CanPlay())
+        if (BoardControllerMP.instance.playHappening && BoardControllerMP.instance.CanPlay() && !BoardControllerMP.instance.gameEnded)
         {
             MakePlayServerRPC(BoardControllerMP.instance.lastLineClicked, BoardControllerMP.instance.lastColClicked);
             BoardControllerMP.instance.playHappening = false;
@@ -50,6 +50,7 @@ public class PhotonPlayer : NetworkBehaviour
     [ServerRpc]
     public void MakePlayServerRPC(int line, int col)
     {
+        if(BoardControllerMP.instance.board[line,col] == 0)
         MakePlayClientRPC(line, col);
     }
 
@@ -58,7 +59,7 @@ public class PhotonPlayer : NetworkBehaviour
     {
         BoardControllerMP.instance.lastLineClicked = line;
         BoardControllerMP.instance.lastColClicked = col;
-        BoardControllerMP.instance.UpdateGame(line * 3 + col);
+        BoardControllerMP.instance.UpdateGame(line, col);
 
         //print(hasPlayFinished);
 

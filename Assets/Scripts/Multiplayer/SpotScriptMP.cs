@@ -28,7 +28,7 @@ public class SpotScriptMP : NetworkBehaviour
     {
         if(BoardControllerMP.instance.CanPlay())
         {
-            print("Making Play");
+            //print("Making Play");
             BoardControllerMP.instance.lastLineClicked = line;
             BoardControllerMP.instance.lastColClicked = column;
             BoardControllerMP.instance.playHappening = true;
