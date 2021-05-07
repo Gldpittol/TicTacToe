@@ -59,6 +59,7 @@ public class BoardControllerMP : NetworkBehaviour
 
     public GameObject photonButtons;
 
+    public GameObject playerHolder;
     private void Awake()
     {
         board = new int[numberOfLines, numberOfColumns];

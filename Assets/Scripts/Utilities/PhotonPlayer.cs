@@ -24,7 +24,13 @@ public class PhotonPlayer : NetworkBehaviour
     {
         if (!IsOwner) return;
 
-        if(BoardControllerMP.instance.isRestarting)
+        if (!BoardControllerMP.instance.panelPhoton.activeInHierarchy && BoardControllerMP.instance.playerHolder.transform.childCount != 2)
+        {
+            if (NetworkManager.Singleton) Destroy(NetworkManager.Singleton.gameObject);
+            SceneManager.LoadScene("LevelSelection", LoadSceneMode.Single);
+        }
+
+        if (BoardControllerMP.instance.isRestarting)
         {
             RestartGameServerRPC();
         }
@@ -68,6 +74,10 @@ public class PhotonPlayer : NetworkBehaviour
         BoardControllerMP.instance.isHostTurn = hostStart;
         BoardControllerMP.instance.isCircle = !hostStart;
         gameStarted = true;
+
+        GameObject[] tempObjects = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject g in tempObjects) g.transform.parent = BoardControllerMP.instance.playerHolder.transform;
+
         BoardControllerMP.instance.panelPhoton.SetActive(false);
     }
 
