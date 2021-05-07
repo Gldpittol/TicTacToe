@@ -113,7 +113,7 @@ public class BoardControllerMP : NetworkBehaviour
                         //print("winner " + winner);
 
                         //if (!IsPCTurn)
-                            PrintWinLine(i, -1, 90, toCompare);
+                            //PrintWinLine(i, -1, 90, toCompare);
                         lineToPrintLine = i;
                         colToPrintLine = -1;
                         _angle = 90;
@@ -147,7 +147,7 @@ public class BoardControllerMP : NetworkBehaviour
                         //print("winner " + winner);
 
                         //if (!IsPCTurn)
-                            PrintWinLine(-1, i, 0, toCompare);
+                            //PrintWinLine(-1, i, 0, toCompare);
                         lineToPrintLine = -1;
                         colToPrintLine = i;
                         _angle = 0;
@@ -179,7 +179,7 @@ public class BoardControllerMP : NetworkBehaviour
                     // print("winner " + winner);
 
                     //if (!IsPCTurn)
-                        PrintWinLine(-1, -1, 45, toCompare);
+                        //PrintWinLine(-1, -1, 45, toCompare);
                     lineToPrintLine = -1;
                     colToPrintLine = -1;
                     _angle = 45;
@@ -207,7 +207,7 @@ public class BoardControllerMP : NetworkBehaviour
                     //print("winner " + winner);
 
                     //if (!IsPCTurn)
-                        PrintWinLine(-1, -1, 135, toCompare);
+                        //PrintWinLine(-1, -1, 135, toCompare);
                     lineToPrintLine = 1;
                     colToPrintLine = -1;
                     _angle = 135;
@@ -270,9 +270,18 @@ public class BoardControllerMP : NetworkBehaviour
     public void ChangeLineColor(int result, GameObject line)
     {
         if (result == -1)
+        {
             line.GetComponent<Image>().color = new Color(255, 0, 0, 0);
+            if(IsHost) SoundScript.instance.PlayAudio("Lose");
+            else SoundScript.instance.PlayAudio("Win");
+
+        }
         else
+        {
             line.GetComponent<Image>().color = new Color(0, 0, 255, 0);
+            if (IsHost) SoundScript.instance.PlayAudio("Win");
+            else SoundScript.instance.PlayAudio("Lose");
+        }
     }
 
     [ServerRpc]

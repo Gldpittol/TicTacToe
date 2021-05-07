@@ -3171,6 +3171,7 @@ MonoBehaviour:
   playLine: 0
   playCol: 0
   lastLineClicked: -1
+  lastColClicked: -1
   spots:
   - {fileID: 8438487061618882674}
   - {fileID: 8438487062163300102}
@@ -3181,6 +3182,17 @@ MonoBehaviour:
   - {fileID: 8438487063457349910}
   - {fileID: 8438487061614706302}
   - {fileID: 8438487062294946284}
+  playHappening: 0
+  numberOfLines: 3
+  numberOfColumns: 3
+  winner: 0
+  gameEnded: 0
+  winLine: {fileID: 8743405183432044296, guid: bb675f1a297922e4f9e17974a63a0d12, type: 3}
+  didPlayerStart: 1
+  canv: {fileID: 8438487061746961282}
+  _angle: 0
+  lineToPrintLine: 0
+  colToPrintLine: 0
 --- !u!114 &8438487062935280729
 MonoBehaviour:
   m_ObjectHideFlags: 0

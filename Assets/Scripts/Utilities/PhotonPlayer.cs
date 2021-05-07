@@ -62,6 +62,8 @@ public class PhotonPlayer : NetworkBehaviour
         BoardControllerMP.instance.lastLineClicked = line;
         BoardControllerMP.instance.lastColClicked = col;
         BoardControllerMP.instance.UpdateGame(line, col);
+        SoundScript.instance.PlayAudio("Play");
+
 
         //print(hasPlayFinished);
 
