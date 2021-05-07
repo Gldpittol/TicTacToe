@@ -53,9 +53,6 @@ public class PhotonPlayer : NetworkBehaviour
             BoardControllerMP.instance.debugText2.gameObject.SetActive(false);
         }
 
-        //BoardControllerMP.instance.debugText.text = "Is Host: " + IsHost + "\nIs Host Turn: " + BoardControllerMP.instance.isHostTurn + "\nGame Started: " + gameStarted;
-        //BoardControllerMP.instance.debugText2.text = "Linha: " + BoardControllerMP.instance.lastLineClicked + "\nColuna: " + BoardControllerMP.instance.lastColClicked + "\nWinner: " + BoardControllerMP.instance.winner;
-
         if (BoardControllerMP.instance.playHappening && BoardControllerMP.instance.CanPlay() && !BoardControllerMP.instance.gameEnded)
         {
             MakePlayServerRPC(BoardControllerMP.instance.lastLineClicked, BoardControllerMP.instance.lastColClicked);
@@ -82,7 +79,6 @@ public class PhotonPlayer : NetworkBehaviour
 
         BoardControllerMP.instance.panelPhoton.SetActive(false);
         BoardControllerMP.instance.panelUnet.SetActive(false);
-
     }
 
     [ServerRpc]
@@ -99,25 +95,6 @@ public class PhotonPlayer : NetworkBehaviour
         BoardControllerMP.instance.lastColClicked = col;
         BoardControllerMP.instance.UpdateGame(line, col);
         SoundScript.instance.PlayAudio("Play");
-
-
-        //print(hasPlayFinished);
-
-        //if(BoardControllerMP.instance.lastSpotClicked)
-        //{
-        //    if (BoardControllerMP.instance.isCircle) BoardControllerMP.instance.lastSpotClicked.img.sprite = BoardControllerMP.instance.lastSpotClicked.spriteO;
-        //    else BoardControllerMP.instance.lastSpotClicked.img.sprite = BoardControllerMP.instance.lastSpotClicked.spriteX;
-
-        //    BoardControllerMP.instance.lastSpotClicked.img.color = new Color(1, 1, 1, 1);
-
-        //    BoardControllerMP.instance.isCircle = !BoardControllerMP.instance.isCircle;
-
-        //    BoardControllerMP.instance.isHostTurn = !BoardControllerMP.instance.isHostTurn;
-
-        //    BoardControllerMP.instance.lastSpotClicked = null;
-
-        //    hasPlayFinished = true;
-        //}
     }
 
     [ServerRpc]
