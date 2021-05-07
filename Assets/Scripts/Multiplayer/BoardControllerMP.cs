@@ -13,55 +13,38 @@ public class BoardControllerMP : NetworkBehaviour
 {
     public static BoardControllerMP instance;
 
+    public int playLine = -1, playCol = -1;
+    public int lastLineClicked = -1;
+    public int lastColClicked = -1;
+    public int numberOfLines = 3;
+    public int numberOfColumns = 3;
+    public int winner = 0;
+    public int lineToPrintLine;
+    public int colToPrintLine;
+    public int[,] board;
+    
+    public float _angle;
+  
     public bool isCircle = false;
-
+    public bool playHappening = false;
+    public bool didPlayerStart = true;
+    public bool isRestarting = false;
     public bool isHostTurn;
+    public bool gameEnded;
+
+    public GameObject panelPhoton;
+    public GameObject panelUnet;
+    public GameObject photonWaitingPlayers;
+    public GameObject photonButtons;
+    public GameObject playerHolder;
+    public GameObject winLine;
+    public GameObject canv;
 
     public Text debugText;
-
     public Text debugText2;
-
-    public int playLine = -1, playCol = -1;
-
-    public int lastLineClicked = -1;
-
-    public int lastColClicked = -1;
 
     public SpotScriptMP[] spots;
 
-    public bool playHappening = false;
-
-    public int[,] board;
-
-    public int numberOfLines = 3;
-    public int numberOfColumns = 3;
-
-    public int winner = 0;
-
-    public bool gameEnded;
-
-    public GameObject winLine;
-
-    public bool didPlayerStart = true;
-
-    public GameObject canv;
-
-    public float _angle;
-
-    public int lineToPrintLine;
-    public int colToPrintLine;
-
-    public bool isRestarting = false;
-
-    public GameObject panelPhoton;
-    
-    public GameObject panelUnet;
-
-    public GameObject photonWaitingPlayers;
-
-    public GameObject photonButtons;
-
-    public GameObject playerHolder;
     private void Awake()
     {
         board = new int[numberOfLines, numberOfColumns];
