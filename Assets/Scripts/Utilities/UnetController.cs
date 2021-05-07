@@ -8,21 +8,21 @@ using MLAPI.Transports.PhotonRealtime;
 using MLAPI.Messaging;
 using UnityEngine.SceneManagement;
 using WebSocketSharp;
-public class PhotonController : MonoBehaviour
+public class UnetController : MonoBehaviour
 {
-    public InputField roomField;
+    public InputField IPField;
 
     private void Start()
     {
-        if(PlayerPrefs.HasKey("LastUsedKey"))
+        if (PlayerPrefs.HasKey("LastUsedKeyUnet"))
         {
-            roomField.text = PlayerPrefs.GetString("LastUsedKey");
+            IPField.text = PlayerPrefs.GetString("LastUsedKeyUnet");
         }
     }
 
     public void UpdateLastUsedRoom()
     {
-        PlayerPrefs.SetString("LastUsedKey", roomField.text);
+        PlayerPrefs.SetString("LastUsedKeyUnet", IPField.text);
     }
 
     public void StartHost()
@@ -30,13 +30,15 @@ public class PhotonController : MonoBehaviour
         NetworkManager.Singleton.StartHost();
         BoardControllerMP.instance.photonWaitingPlayers.SetActive(true);
         BoardControllerMP.instance.photonButtons.SetActive(false);
-        BoardControllerMP.instance.photonButtons.transform.parent.gameObject.GetComponent<Image>().color = new Color(0.5f,0.5f,0.5f,1);
+        BoardControllerMP.instance.photonButtons.transform.parent.gameObject.GetComponent<Image>().color = new Color(0.5f, 0.5f, 0.5f, 1);
     }
 
     public void StartClient()
     {
         var networkManager = NetworkManager.Singleton;
-        networkManager.GetComponent<PhotonRealtimeTransport>().RoomName = roomField.text;
+        networkManager.GetComponent<UNetTransport>().ConnectAddress = IPField.text;
         networkManager.StartClient();
     }
+
+
 }

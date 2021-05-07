@@ -54,6 +54,8 @@ public class BoardControllerMP : NetworkBehaviour
     public bool isRestarting = false;
 
     public GameObject panelPhoton;
+    
+    public GameObject panelUnet;
 
     public GameObject photonWaitingPlayers;
 
@@ -238,7 +240,15 @@ public class BoardControllerMP : NetworkBehaviour
         //    print(" \n ");
         //}
 
-        return winner;
+        for (i = 0; i < numberOfLines; i++)
+        {
+            for (j = 0; j < numberOfColumns; j++)
+            {
+                if (board[i, j] == 0) return winner;
+            }
+        }
+
+        return 9;
     }
 
 
@@ -303,7 +313,7 @@ public class BoardControllerMP : NetworkBehaviour
     {
         gameEnded = true;
         winner = _winner;
-        PrintWinLine(lineToPrint, colToPrint, newAngle, _winner);
+        if(winner != 9) PrintWinLine(lineToPrint, colToPrint, newAngle, _winner);
     }
 
     public void RestartGame()

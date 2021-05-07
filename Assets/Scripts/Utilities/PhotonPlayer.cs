@@ -24,7 +24,7 @@ public class PhotonPlayer : NetworkBehaviour
     {
         if (!IsOwner) return;
 
-        if (!BoardControllerMP.instance.panelPhoton.activeInHierarchy && BoardControllerMP.instance.playerHolder.transform.childCount != 2)
+        if ((!BoardControllerMP.instance.panelPhoton.activeInHierarchy && !BoardControllerMP.instance.panelUnet.activeInHierarchy) && BoardControllerMP.instance.playerHolder.transform.childCount != 2)
         {
             if (NetworkManager.Singleton) Destroy(NetworkManager.Singleton.gameObject);
             SceneManager.LoadScene("LevelSelection", LoadSceneMode.Single);
@@ -44,6 +44,8 @@ public class PhotonPlayer : NetworkBehaviour
             BoardControllerMP.instance.debugText2.gameObject.SetActive(true);
             if ((IsHost && BoardControllerMP.instance.winner == 1) || (!IsHost && BoardControllerMP.instance.winner == -1)) BoardControllerMP.instance.debugText2.text = "<color=green>Victory!</color>";
             else BoardControllerMP.instance.debugText2.text = "<color=red>Defeat!</color>";
+
+            if(BoardControllerMP.instance.winner == 9) BoardControllerMP.instance.debugText2.text = "<color=yellow>It's a tie!</color>";
         }
         else
         {
@@ -79,6 +81,8 @@ public class PhotonPlayer : NetworkBehaviour
         foreach (GameObject g in tempObjects) g.transform.parent = BoardControllerMP.instance.playerHolder.transform;
 
         BoardControllerMP.instance.panelPhoton.SetActive(false);
+        BoardControllerMP.instance.panelUnet.SetActive(false);
+
     }
 
     [ServerRpc]
@@ -148,5 +152,6 @@ public class PhotonPlayer : NetworkBehaviour
         BoardControllerMP.instance.isHostTurn = boolRandom;
         BoardControllerMP.instance.isCircle = !boolRandom;
         BoardControllerMP.instance.isRestarting = false;
+        BoardControllerMP.instance.gameEnded = false;
     }
 }
