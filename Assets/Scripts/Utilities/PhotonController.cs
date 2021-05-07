@@ -28,6 +28,9 @@ public class PhotonController : MonoBehaviour
     public void StartHost()
     {
         NetworkManager.Singleton.StartHost();
+        BoardControllerMP.instance.photonWaitingPlayers.SetActive(true);
+        BoardControllerMP.instance.photonButtons.SetActive(false);
+        BoardControllerMP.instance.photonButtons.transform.parent.gameObject.GetComponent<Image>().color = new Color(0.5f,0.5f,0.5f,1);
     }
 
     public void StartClient()

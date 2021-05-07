@@ -51,6 +51,14 @@ public class BoardControllerMP : NetworkBehaviour
     public int lineToPrintLine;
     public int colToPrintLine;
 
+    public bool isRestarting = false;
+
+    public GameObject panelPhoton;
+
+    public GameObject photonWaitingPlayers;
+
+    public GameObject photonButtons;
+
     private void Awake()
     {
         board = new int[numberOfLines, numberOfColumns];
@@ -295,5 +303,10 @@ public class BoardControllerMP : NetworkBehaviour
         gameEnded = true;
         winner = _winner;
         PrintWinLine(lineToPrint, colToPrint, newAngle, _winner);
+    }
+
+    public void RestartGame()
+    {
+        isRestarting = true;
     }
 }

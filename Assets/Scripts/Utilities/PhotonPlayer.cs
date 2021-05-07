@@ -24,8 +24,29 @@ public class PhotonPlayer : NetworkBehaviour
     {
         if (!IsOwner) return;
 
-        BoardControllerMP.instance.debugText.text = "Is Host: " + IsHost + "\nIs Host Turn: " + BoardControllerMP.instance.isHostTurn + "\nGame Started: " + gameStarted;
-        BoardControllerMP.instance.debugText2.text = "Linha: " + BoardControllerMP.instance.lastLineClicked + "\nColuna: " + BoardControllerMP.instance.lastColClicked + "\nWinner: " + BoardControllerMP.instance.winner;
+        if(BoardControllerMP.instance.isRestarting)
+        {
+            RestartGameServerRPC();
+        }
+
+        if ((BoardControllerMP.instance.isHostTurn && IsHost) || (!BoardControllerMP.instance.isHostTurn && !IsHost)) BoardControllerMP.instance.debugText.text = "<color=green>Your Turn</color>";
+        else BoardControllerMP.instance.debugText.text = "<color=red>Opponent's Turn</color>";
+
+        if(BoardControllerMP.instance.gameEnded)
+        {
+            BoardControllerMP.instance.debugText.gameObject.SetActive(false);
+            BoardControllerMP.instance.debugText2.gameObject.SetActive(true);
+            if ((IsHost && BoardControllerMP.instance.winner == 1) || (!IsHost && BoardControllerMP.instance.winner == -1)) BoardControllerMP.instance.debugText2.text = "<color=green>Victory!</color>";
+            else BoardControllerMP.instance.debugText2.text = "<color=red>Defeat!</color>";
+        }
+        else
+        {
+            BoardControllerMP.instance.debugText.gameObject.SetActive(true);
+            BoardControllerMP.instance.debugText2.gameObject.SetActive(false);
+        }
+
+        //BoardControllerMP.instance.debugText.text = "Is Host: " + IsHost + "\nIs Host Turn: " + BoardControllerMP.instance.isHostTurn + "\nGame Started: " + gameStarted;
+        //BoardControllerMP.instance.debugText2.text = "Linha: " + BoardControllerMP.instance.lastLineClicked + "\nColuna: " + BoardControllerMP.instance.lastColClicked + "\nWinner: " + BoardControllerMP.instance.winner;
 
         if (BoardControllerMP.instance.playHappening && BoardControllerMP.instance.CanPlay() && !BoardControllerMP.instance.gameEnded)
         {
@@ -47,6 +68,7 @@ public class PhotonPlayer : NetworkBehaviour
         BoardControllerMP.instance.isHostTurn = hostStart;
         BoardControllerMP.instance.isCircle = !hostStart;
         gameStarted = true;
+        BoardControllerMP.instance.panelPhoton.SetActive(false);
     }
 
     [ServerRpc]
@@ -84,5 +106,37 @@ public class PhotonPlayer : NetworkBehaviour
         //}
     }
 
+    [ServerRpc]
+    public void RestartGameServerRPC()
+    {
+        bool boolRandom = Random.value < 0.5f;
+        RestartGameClientRPC(boolRandom);
+    }
 
+    [ClientRpc]
+    public void RestartGameClientRPC(bool boolRandom)
+    {
+        for (int i = 0; i < BoardControllerMP.instance.numberOfLines; i++)
+        {
+            for (int j = 0; j < BoardControllerMP.instance.numberOfColumns; j++)
+            {
+                BoardControllerMP.instance.board[i, j] = 0;
+
+                foreach(Transform t in BoardControllerMP.instance.canv.GetComponentInChildren<Transform>())
+                {
+                    if (t.gameObject.CompareTag("WinLine")) Destroy(t.gameObject);
+                    else if (t.gameObject.CompareTag("Spot"))
+                    {
+                        t.GetComponent<Image>().color = new Color(1, 1, 1, 0);
+                    }
+                }
+            }
+        }
+
+        BoardControllerMP.instance.winner = 0;
+        BoardControllerMP.instance.playHappening = false;
+        BoardControllerMP.instance.isHostTurn = boolRandom;
+        BoardControllerMP.instance.isCircle = !boolRandom;
+        BoardControllerMP.instance.isRestarting = false;
+    }
 }
