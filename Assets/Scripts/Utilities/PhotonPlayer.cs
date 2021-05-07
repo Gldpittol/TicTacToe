@@ -37,13 +37,15 @@ public class PhotonPlayer : NetworkBehaviour
     [ServerRpc]
     public void GoToGameSceneServerRPC()
     {
-        GoToGameSceneClientRPC();
+        bool hostStart = Random.value < 0.5f;
+        GoToGameSceneClientRPC(hostStart);
     }
 
     [ClientRpc]
-    public void GoToGameSceneClientRPC()
+    public void GoToGameSceneClientRPC(bool hostStart)
     {
-        BoardControllerMP.instance.isHostTurn = true;
+        BoardControllerMP.instance.isHostTurn = hostStart;
+        BoardControllerMP.instance.isCircle = !hostStart;
         gameStarted = true;
     }
 

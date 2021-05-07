@@ -40,6 +40,17 @@ public class BoardControllerMP : NetworkBehaviour
 
     public bool gameEnded;
 
+    public GameObject winLine;
+
+    public bool didPlayerStart = true;
+
+    public GameObject canv;
+
+    public float _angle;
+
+    public int lineToPrintLine;
+    public int colToPrintLine;
+
     private void Awake()
     {
         board = new int[numberOfLines, numberOfColumns];
@@ -56,7 +67,7 @@ public class BoardControllerMP : NetworkBehaviour
 
             if (winner != 0 && !gameEnded)
             {
-                UpdateWinnerServerRPC(winner);
+                UpdateWinnerServerRPC(winner, lineToPrintLine, colToPrintLine, _angle);
                 gameEnded = true;
             }
         }
@@ -102,7 +113,11 @@ public class BoardControllerMP : NetworkBehaviour
                         //print("winner " + winner);
 
                         //if (!IsPCTurn)
-                        //    PrintWinLine(i, -1, 90, toCompare);
+                            PrintWinLine(i, -1, 90, toCompare);
+                        lineToPrintLine = i;
+                        colToPrintLine = -1;
+                        _angle = 90;
+
 
                         return winner;
                     }
@@ -132,7 +147,10 @@ public class BoardControllerMP : NetworkBehaviour
                         //print("winner " + winner);
 
                         //if (!IsPCTurn)
-                        //    PrintWinLine(-1, i, 0, toCompare);
+                            PrintWinLine(-1, i, 0, toCompare);
+                        lineToPrintLine = -1;
+                        colToPrintLine = i;
+                        _angle = 0;
 
                         return winner;
                     }
@@ -161,7 +179,10 @@ public class BoardControllerMP : NetworkBehaviour
                     // print("winner " + winner);
 
                     //if (!IsPCTurn)
-                    //    PrintWinLine(-1, -1, 45, toCompare);
+                        PrintWinLine(-1, -1, 45, toCompare);
+                    lineToPrintLine = -1;
+                    colToPrintLine = -1;
+                    _angle = 45;
 
                     return winner;
                 }
@@ -186,7 +207,10 @@ public class BoardControllerMP : NetworkBehaviour
                     //print("winner " + winner);
 
                     //if (!IsPCTurn)
-                    //    PrintWinLine(-1, -1, 135, toCompare);
+                        PrintWinLine(-1, -1, 135, toCompare);
+                    lineToPrintLine = 1;
+                    colToPrintLine = -1;
+                    _angle = 135;
 
                     return winner;
                 }
@@ -208,14 +232,59 @@ public class BoardControllerMP : NetworkBehaviour
         return winner;
     }
 
-    [ServerRpc]
-    public void UpdateWinnerServerRPC(int winner)
+
+    public void PrintWinLine(int line, int column, float rotation, int result)
     {
-        UpdateWinnerClientRPC(winner);
+        GameObject temp;
+        if (winLine)
+        {
+            if (line == -1 && column == -1)
+            {
+                temp = Instantiate(winLine, transform.position, Quaternion.identity, canv.transform);
+                temp.transform.localScale = new Vector3(1f, 1f, 1f);
+                temp.transform.localPosition = new Vector3(0f, 0f, 0f);
+                temp.transform.Rotate(0f, 0f, rotation);
+                ChangeLineColor(result, temp);
+            }
+            else if (line != -1 && column == -1)
+            {
+                temp = Instantiate(winLine, transform.position, Quaternion.identity, canv.transform);
+                temp.transform.localScale = new Vector3(1f, 1f, 1f);
+                temp.transform.localPosition = new Vector3(0f, 200f - (line * 200), 0f);
+                temp.transform.Rotate(0f, 0f, rotation);
+                ChangeLineColor(result, temp);
+            }
+            else if (line == -1 && column != -1)
+            {
+                temp = Instantiate(winLine, transform.position, Quaternion.identity, canv.transform);
+                temp.transform.localScale = new Vector3(1f, 1f, 1f);
+                temp.transform.localPosition = new Vector3(-200f + (column * 200), 0f, 0f);
+                temp.transform.Rotate(0f, 0f, rotation);
+                ChangeLineColor(result, temp);
+            }
+        }
+
+        winLine = null;
+    }
+
+    public void ChangeLineColor(int result, GameObject line)
+    {
+        if (result == -1)
+            line.GetComponent<Image>().color = new Color(255, 0, 0, 0);
+        else
+            line.GetComponent<Image>().color = new Color(0, 0, 255, 0);
+    }
+
+    [ServerRpc]
+    public void UpdateWinnerServerRPC(int winner, int lineToPrint, int colToPrint, float angle)
+    {
+        UpdateWinnerClientRPC(winner, lineToPrint, colToPrint, angle);
     }
     [ClientRpc]
-    public void UpdateWinnerClientRPC(int _winner)
+    public void UpdateWinnerClientRPC(int _winner, int lineToPrint, int colToPrint, float newAngle)
     {
+        gameEnded = true;
         winner = _winner;
+        PrintWinLine(lineToPrint, colToPrint, newAngle, _winner);
     }
 }
