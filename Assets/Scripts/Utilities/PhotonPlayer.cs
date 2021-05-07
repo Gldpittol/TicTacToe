@@ -16,7 +16,7 @@ public class PhotonPlayer : NetworkBehaviour
 
     private void Start()
     {
-        DontDestroyOnLoad(this.gameObject);
+        //DontDestroyOnLoad(this.gameObject);
         if(IsClient && !IsHost) GoToGameSceneServerRPC();
     }
 
