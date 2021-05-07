@@ -3932,7 +3932,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 2100289939}
   m_OnClick:
     m_PersistentCalls:
@@ -6872,10 +6872,10 @@ RectTransform:
   m_Father: {fileID: 8438487061746961310}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!4 &8438487062935280725
 Transform:
@@ -6921,14 +6921,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4de4f8660de2fbf459ada659ac14be79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isCircle: 0
-  isHostTurn: 0
-  debugText: {fileID: 1043064761}
-  debugText2: {fileID: 814863271}
   playLine: 0
   playCol: 0
   lastLineClicked: -1
   lastColClicked: -1
+  numberOfLines: 3
+  numberOfColumns: 3
+  winner: 0
+  lineToPrintLine: 0
+  colToPrintLine: 0
+  _angle: 0
+  isCircle: 0
+  playHappening: 0
+  didPlayerStart: 1
+  isRestarting: 0
+  isHostTurn: 0
+  gameEnded: 0
+  panelPhoton: {fileID: 4370180897769209129}
+  panelUnet: {fileID: 621388719}
+  photonWaitingPlayers: {fileID: 232453075}
+  photonButtons: {fileID: 601784874}
+  playerHolder: {fileID: 1379996961}
+  winLine: {fileID: 8743405183432044296, guid: bb675f1a297922e4f9e17974a63a0d12, type: 3}
+  canv: {fileID: 8438487061746961282}
+  debugText: {fileID: 1043064761}
+  debugText2: {fileID: 814863271}
   spots:
   - {fileID: 8438487061618882674}
   - {fileID: 8438487062163300102}
@@ -6939,23 +6956,6 @@ MonoBehaviour:
   - {fileID: 8438487063457349910}
   - {fileID: 8438487061614706302}
   - {fileID: 8438487062294946284}
-  playHappening: 0
-  numberOfLines: 3
-  numberOfColumns: 3
-  winner: 0
-  gameEnded: 0
-  winLine: {fileID: 8743405183432044296, guid: bb675f1a297922e4f9e17974a63a0d12, type: 3}
-  didPlayerStart: 1
-  canv: {fileID: 8438487061746961282}
-  _angle: 0
-  lineToPrintLine: 0
-  colToPrintLine: 0
-  isRestarting: 0
-  panelPhoton: {fileID: 4370180897769209129}
-  panelUnet: {fileID: 621388719}
-  photonWaitingPlayers: {fileID: 232453075}
-  photonButtons: {fileID: 601784874}
-  playerHolder: {fileID: 1379996961}
 --- !u!114 &8438487062935280729
 MonoBehaviour:
   m_ObjectHideFlags: 0
