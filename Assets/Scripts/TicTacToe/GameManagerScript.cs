@@ -10,7 +10,7 @@ public class GameManagerScript : MonoBehaviour
     {
         if (!objectExists)
         {
-            DontDestroyOnLoad(this);
+            //DontDestroyOnLoad(this);
             objectExists = true;
         }
 

@@ -6,7 +6,6 @@ using UnityEngine.UIElements;
 
 public class ButtonScript : MonoBehaviour
 {
-   
     public void SetDifficulty(int difficulty)
     {
         BoardController temp = GameObject.FindGameObjectWithTag("GameController").GetComponent<BoardController>();
@@ -18,6 +17,8 @@ public class ButtonScript : MonoBehaviour
 
     public void Restart()
     {
+        print("Restarting");
+
         SceneManager.LoadScene("Level", LoadSceneMode.Single);
     }
 
