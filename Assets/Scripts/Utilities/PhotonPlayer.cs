@@ -17,7 +17,7 @@ public class PhotonPlayer : NetworkBehaviour
     private void Start()
     {
         //DontDestroyOnLoad(this.gameObject);
-        if(IsClient && !IsHost) GoToGameSceneServerRPC();
+        if(IsClient && !IsHost && IsOwner) GoToGameSceneServerRPC();
     }
 
     private void Update()
@@ -32,6 +32,7 @@ public class PhotonPlayer : NetworkBehaviour
 
         if (BoardControllerMP.instance.isRestarting)
         {
+            BoardControllerMP.instance.isRestarting = false;
             RestartGameServerRPC();
         }
 

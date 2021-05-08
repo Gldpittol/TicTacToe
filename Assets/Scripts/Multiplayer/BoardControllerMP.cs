@@ -266,7 +266,7 @@ public class BoardControllerMP : NetworkBehaviour
             }
         }
 
-        winLine = null;
+        temp = null;
     }
 
     public void ChangeLineColor(int result, GameObject line)
