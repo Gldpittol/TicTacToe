@@ -27,6 +27,8 @@ public class PhotonController : MonoBehaviour
 
     public void StartHost()
     {
+        var networkManager = NetworkManager.Singleton;
+        networkManager.GetComponent<PhotonRealtimeTransport>().RoomName = roomField.text;
         NetworkManager.Singleton.StartHost();
         BoardControllerMP.instance.photonWaitingPlayers.SetActive(true);
         BoardControllerMP.instance.photonButtons.SetActive(false);

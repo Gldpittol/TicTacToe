@@ -266,6 +266,14 @@ public class BoardControllerMP : NetworkBehaviour
             }
         }
 
+        for (int i = 0; i < numberOfLines; i++)
+        {
+            for (int j = 0; j < numberOfColumns; j++)
+            {
+                if (board[i, j] != result && board[i, j] != 0) spots[i * 3 + j].img.sprite = spots[i * 3 + j].spriteDead;
+            }
+        }
+
         temp = null;
     }
 
