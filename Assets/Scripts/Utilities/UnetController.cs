@@ -28,9 +28,9 @@ public class UnetController : MonoBehaviour
     public void StartHost()
     {
         NetworkManager.Singleton.StartHost();
-        BoardControllerMP.instance.photonWaitingPlayers.SetActive(true);
-        BoardControllerMP.instance.photonButtons.SetActive(false);
-        BoardControllerMP.instance.photonButtons.transform.parent.gameObject.GetComponent<Image>().color = new Color(0.5f, 0.5f, 0.5f, 1);
+        BoardControllerMP.instance.unetWaitingPlayers.SetActive(true);
+        BoardControllerMP.instance.unetButtons.SetActive(false);
+        BoardControllerMP.instance.unetButtons.transform.parent.gameObject.GetComponent<Image>().color = new Color(0.5f, 0.5f, 0.5f, 1);
     }
 
     public void StartClient()

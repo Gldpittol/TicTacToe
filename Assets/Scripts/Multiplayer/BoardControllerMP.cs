@@ -36,6 +36,8 @@ public class BoardControllerMP : NetworkBehaviour
     public GameObject panelUnet;
     public GameObject photonWaitingPlayers;
     public GameObject photonButtons;
+    public GameObject unetWaitingPlayers;
+    public GameObject unetButtons;
     public GameObject playerHolder;
     public GameObject winLine;
     public GameObject canv;
